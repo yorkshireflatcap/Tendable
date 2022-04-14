@@ -33,7 +33,7 @@ namespace NUnit.Driver
         private ChromeDriver GetWebDriver()
         {
             ChromeOptions option = new ChromeOptions();
-            option.AddArguments("start-maximised");
+            option.AddArguments("start-maximised", "headless");
             new DriverManager().SetUpDriver(new ChromeConfig());
             return new ChromeDriver(option);
         }
