@@ -87,7 +87,7 @@ namespace TendableFramework.PageObjects
             try
             {
                 jsExecutor.ExecuteScript(javascript);
-                var element = new WebDriverWait(Webdriver, TimeSpan.FromSeconds(2)).Until(ExpectedConditions.ElementIsVisible(By.CssSelector("#contactForm .ff-form-errors")));
+                var element = new WebDriverWait(Webdriver, TimeSpan.FromSeconds(2)).Until(ExpectedConditions.ElementIsVisible(By.CssSelector(".ff-errors")));
                 numberOfErrors = _errorMsg.Count();
             }
             catch (Exception ex)

@@ -12,7 +12,7 @@ namespace NUnit.Tests
 
 
         static object[] topLevelMenus = {
-            new object[] { "Features", "Why Tendable", "Resources", "Company" }
+            new string[] { "Features", "Why Tendable", "Resources", "Company" } // Pass this in as a single array entity
         };
  
         [TestCase("Home", 
@@ -41,7 +41,7 @@ namespace NUnit.Tests
         [Test(
          Description = "Check if the named menu items exist as well as the company logo"), 
          TestCaseSource(nameof(topLevelMenus))]
-        public void HoverOverAllTopLevelMenuItemsToDisplayDropdown(object[] menuItemTitles)
+        public void HoverOverAllTopLevelMenuItemsToDisplayDropdown(string[] menuItemTitles)
         {
             _homePage = new HomePage();
             foreach (var itemMenu in menuItemTitles)
@@ -54,7 +54,7 @@ namespace NUnit.Tests
         [Test(
          Description = "Book a Demo button is available to all items under the main menu title"),
          TestCaseSource(nameof(topLevelMenus))]
-        public void EveryOptionClickedInDropdownShouldBookADemo(object[] menuItemTitles)
+        public void EveryOptionClickedInDropdownShouldBookADemo(string[] menuItemTitles)
         {
             _homePage = new HomePage();
 

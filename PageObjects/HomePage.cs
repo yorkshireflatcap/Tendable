@@ -37,14 +37,16 @@ namespace TendableFramework.PageObjects
                return _currentOption.Count();
             }
         }
-        public void Hover(object name)
+        public void Hover(string name)
         {
             int count = 0;
             var menuTitle = Regex.Replace(name.ToString().ToLower(), @"\s+", "");
 
-            var item = _topLevelMenu.Select(x => x.FindElement(By.Id(menuTitle))).First();
+            var wait = new WebDriverWait(Webdriver, TimeSpan.FromSeconds(3));
 
-            item = new WebDriverWait(Webdriver, TimeSpan.FromSeconds(3)).Until(ExpectedConditions.ElementToBeClickable(item));
+            var item = _topLevelMenu.Select(x => wait.Until(ExpectedConditions.ElementIsVisible(By.Id(menuTitle)))).First();
+
+            //item = new WebDriverWait(Webdriver, TimeSpan.FromSeconds(3)).Until(ExpectedConditions.ElementToBeClickable(item));
 
             Actions action = new Actions(Webdriver);
             try
@@ -56,16 +58,19 @@ namespace TendableFramework.PageObjects
                  count = 0;
             }
 
-            _currentOption = Webdriver.FindElements(By.CssSelector(String.Format("#main-navigation-new a#{0}+ul li", menuTitle))).ToList();
+            string menuOption = String.Format("#main-navigation-new a#{0}+ul li", menuTitle);
+
+            _currentOption = wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(By.CssSelector(menuOption)));
+            //_currentOption = Webdriver.FindElements(By.CssSelector(String.Format("#main-navigation-new a#{0}+ul li", menuTitle))).ToList();
 ;
         }
         public MenuItem getMenuItemByIdx(int index)
         {
             return new MenuItem(_currentOption[index]);
         }
-        public MenuItem getMenuByName(object name)
+        public MenuItem getMenuByName(string name)
         {
-            var item = _topLevelMenu.Select(x => x.FindElement(By.Id(name.ToString().ToLower())));
+            var item = _topLevelMenu.Select(x => x.FindElement(By.Id(name.ToLower())));
 
             if (item.Count() > 1)
             {
